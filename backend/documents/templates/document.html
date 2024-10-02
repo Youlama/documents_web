@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ data.title }}{% endblock %}
+
+{% block content %}
+    <div class="document_info">
+        <div class="row">
+            <div class="col-8">
+                <p class="page_title">{{ data.title }}</p>
+                <div class = "document_field">
+                    <p class="info_title">Документы</p>
+                    <p>{{ data.docs }}</p>
+                </div>
+                <div class = "document_field">
+                    <p class="info_title">Срок для замены</p>
+                    <p>{{ data.replace_period }}</p>
+                </div>
+                <div class="document_field">
+                    <p class="info_title">Срок изготовления </p>
+                    <p>{{ data.prod_period }}
+                        {% if data.prod_period == 1 %} календарный день
+                        {% elif data.prod_period > 1 and data.prod_period < 5 %} календарных дня
+                        {% else %} календарных дней
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <img class= "document_img" src="{{ data.logo_file_path }}" alt="{{ data.logo_file_path }}"
+                     width="300px">
+            </div>
+        </div>
+    </div>
+{% endblock %}

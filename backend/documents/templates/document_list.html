@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Документы{% endblock %}
+
+{% block content %}
+    <form action="" method="get" class="d-flex mt-4 mb-4">
+        <div class="flex-grow-1">
+            <input class="form-control" placeholder="Поиск" aria-label="Поиск" name="document_title" type="text" value="{{ data.document_title }}">
+        </div>
+        <div class="px-3">
+            <input type="submit" class="btn" value="Поиск">
+        </div>
+        <div>
+            <a href="{% url 'replace' data.replace_id %}" class="btn">
+                <img src="http://127.0.0.1:9000/lab/cart.png" width="25" alt="cart">
+                {{ data.count }}
+            </a>
+        </div>
+    </form>
+
+    <div class="row row-cols-3 m-4">
+        {% for document in data.document_list %}
+            <div class="col">
+                <div class="card m-3">
+                    <div class="card_body h-100">
+                        <p class="card_title">{{ document.title }}</p>
+                        <div class="img_container">
+                        <img src="{{ document.logo_file_path }}" class="document-card-img"
+                             alt="{{ document.logo_file_path }}">
+                        </div>
+                        <p class = "card_info"> Срок изготовления: {{ document.prod_period }}
+                            {% if data.prod_period == 1 %} календарный день
+                            {% elif data.prod_period > 1 and data.prod_period < 5 %} календарных дня
+                            {% else %} календарных дней
+                            {% endif %}
+                        </p>
+                        <a class = "show_more" href="{% url 'document_url' document.id %}" class="btn">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-danger not-found-alert" role="alert">
+                Документ для замены не найден. <a href="{% url 'document_list' %}" class="alert-link">Полный список</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="py-3"></div>
+{% endblock %}
