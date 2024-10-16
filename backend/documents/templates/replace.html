@@ -53,8 +53,8 @@
                     </div>
                     <div class="col-4">
                          <p class = "card_info"> Срок изготовления: {{ document.prod_period }}
-                                {% if data.prod_period == 1 %} календарный день
-                                {% elif data.prod_period > 1 and data.prod_period < 5 %} календарных дня
+                                {% if document.prod_period == 1 %} календарный день
+                                {% elif document.prod_period > 1 and document.prod_period < 5 %} календарных дня
                                 {% else %} календарных дней
                                 {% endif %}
                          </p>
