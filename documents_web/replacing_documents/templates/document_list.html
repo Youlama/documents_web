@@ -13,7 +13,7 @@
         </div>
         <div>
             <a href="{% url 'install_document_request' data.request_id %}"
-               class="btn{% if data.items_in_cart == 0 %}inactive-cart{% endif %}">
+               class="btn{% if data.items_in_cart == 0 %} inactive-cart{% endif %}">
                 <img src="http://127.0.0.1:9000/documents/cart.png" width="25" alt="cart">
                 {{ data.items_in_cart}}
             </a>
