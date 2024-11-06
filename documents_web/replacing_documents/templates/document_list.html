@@ -41,7 +41,9 @@
                                 <form method="POST" action="{% url 'add_document_to_cart' document.id%}" style="text-align:right;"> {% csrf_token %}
                                     <button class="btn" name="add_to_cart">Добавить в заявку</button>
                                 </form>
-                                <a class = "show_more" href="{% url 'document' document.id %}" >Подробнее</a>
+                                <div style="text-align:right; margin-right: 5%;">
+                                    <a class = "show_more" href="{% url 'document' document.id %}" >Подробнее</a>
+                                </div>
                             </div>
                         </div>
                     </div>
