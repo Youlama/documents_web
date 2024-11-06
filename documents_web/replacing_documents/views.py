@@ -22,9 +22,12 @@ def get_request_data(request_id: int):
     items = DocumentInRequest.objects.filter(replacing_request_id=request_id).select_related('document')
     replace_data = (DocumentInRequest.objects.filter(replacing_request_id=request_id)
                     .select_related('replacing_request').first())
+    req_docs_data = DocumentInRequest.objects.filter(replacing_request_id=request_id).first()
+    print(replace_data, 'and ', req_docs_data)
     return {
         'id': request_id,
         'document_list': items,
+        'req_docs_data': req_docs_data,
         'req_id': request_id,
         'replace_data': replace_data,
     }

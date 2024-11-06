@@ -38,7 +38,6 @@ class InstallDocumentRequest(models.Model):
     manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='managed_requests', blank=True, null=True)
     new_client_surname = models.TextField(blank=True, null=True, default='Пятигорская')
     replace_reason = models.TextField(blank=True, null=True, default='Вступление в брак')
-    issue_organization = models.TextField(blank=True, null=True, default='Лениградское шоссе, д. 31/2')
 
     def __str__(self):
         return str(self.id)
@@ -50,7 +49,7 @@ class InstallDocumentRequest(models.Model):
 class DocumentInRequest(models.Model):
     replacing_request = models.ForeignKey(InstallDocumentRequest, on_delete=models.CASCADE)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
-
+    issue_organization = models.TextField(blank=True, null=True, default='Лениградское шоссе, д. 31/2')
     def __str__(self):
         return f"{self.replacing_request}-{self.document_id}"
 
