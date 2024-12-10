@@ -7,9 +7,8 @@ class Document(models.Model):
     prod_period = models.IntegerField()
     replace_period = models.TextField()
     docs = models.TextField()
-    is_active = models.BooleanField(default=True)
-    logo_file_path = models.CharField(max_length=255, null=False, default="")
-
+    logo_file_path = models.CharField(max_length=255, null=True, default="")
+    number_length = models.IntegerField(default=0)
     def __str__(self):
         return self.title
 
@@ -49,7 +48,8 @@ class InstallDocumentRequest(models.Model):
 class DocumentInRequest(models.Model):
     replacing_request = models.ForeignKey(InstallDocumentRequest, on_delete=models.CASCADE)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    issue_organization = models.TextField(blank=True, null=True, default='Лениградское шоссе, д. 31/2')
+    comment = models.TextField(blank=True, null=True, default='')
+    new_document_number = models.BigIntegerField(default=0)
     def __str__(self):
         return f"{self.replacing_request}-{self.document_id}"
 

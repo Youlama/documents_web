@@ -22,24 +22,20 @@
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="row">
-                <div class="col-1">
-                    <p>МФЦ:</p>
-                </div>
-                <div class="col">
-                    <select class = "field">
-                        <option>{{data.req_docs_data.issue_organization}}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="container">
     <div class="row">
         {% for obj in data.document_list %}
         <div class="card mb-4">
             <div class="col">
+                <div class="row" style="margin-top:2%; margin-left:50%">
+                     <div class="col">
+                        <p>Комментарий:</p>
+                     </div>
+                    <div class="col" style="margin-right:20px">
+                        <input style="width:350px;"></input>
+                    </div>
+                </div>
                 <div class="row">
                     <p class="card_title">
                         <a class="text-black text-decoration-none" href="{% url 'document' obj.document.id %}">{{ obj.document.title }}</a>
@@ -58,6 +54,7 @@
                                 {% else %} календарных дней
                                 {% endif %}
                          </p>
+
                     </div>
                 </div>
                 <div class="row-2" style="text-align:right;">
@@ -72,7 +69,7 @@
     {% endfor %}
     <div>
         {% if data.document_list %}
-            <a href="{% url 'delete_request' data.req_id %}" class="btn">Очистить заявку</a>
+            <a href="{% url 'delete_request' data.id %}" class="btn">Очистить заявку</a>
         {% endif %}
     </div>
 {% endblock %}

@@ -25,6 +25,5 @@ urlpatterns = [
     path('add_document_to_cart/<int:document_id>', views.add_document_to_cart, name='add_document_to_cart'),
     path('document/<int:id>/', views.document_page, name='document'),
     path('install_document_request/<int:id>/', views.get_document_request, name='install_document_request'),
-    path('remove_document_request/<int:id>/', views.remove_document_request, name='remove_document_request'),
     path('delete_request/<int:request_id>/', views.delete_request, name='delete_request'),
 ]

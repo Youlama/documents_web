@@ -4,6 +4,8 @@ from django.db.models import Q
 
 from replacing_documents.models import Document, DocumentInRequest, InstallDocumentRequest
 
+import random
+
 USER_ID = 1
 
 def get_request_data(request_id: int):
@@ -23,7 +25,6 @@ def get_request_data(request_id: int):
     replace_data = (DocumentInRequest.objects.filter(replacing_request_id=request_id)
                     .select_related('replacing_request').first())
     req_docs_data = DocumentInRequest.objects.filter(replacing_request_id=request_id).first()
-    print(replace_data, 'and ', req_docs_data)
     return {
         'id': request_id,
         'document_list': items,
@@ -58,9 +59,8 @@ def add_item_to_request(request_id: int, document_id: int):
     """
     Добавление услуги в заявку
     """
-    print('add')
-    sir = DocumentInRequest(replacing_request_id=request_id, document_id=document_id)
-    sir.save()
+    doc_in_request = DocumentInRequest(replacing_request_id=request_id, document_id=document_id)
+    doc_in_request.save()
 
 
 def get_document_list(request):
@@ -114,28 +114,29 @@ def document_page(request, id):
                   }})
 
 
+def generate_document_number(number_length):
+    new_number = ''
+    for i in range(number_length):
+        new_number += str(random.randint(0,9))
+    return int(new_number)
+
+
 def delete_request(request, request_id: int):
     """
     Удаление заявки по id
     """
+    request_documents = DocumentInRequest.objects.filter(replacing_request_id=request_id)
+    for req_doc in request_documents:
+        document = Document.objects.get(id=req_doc.document_id)
+        number_length = document.number_length
+        new_number = generate_document_number(number_length)
+        with connection.cursor() as cursor:
+            sqlstr = "UPDATE document_in_request SET new_document_number=%s WHERE id=%s"
+            cursor.execute(sqlstr, (new_number, req_doc.id))
     raw_sql = "UPDATE install_document_requests SET status='DELETED' WHERE id=%s"
     with connection.cursor() as cursor:
         cursor.execute(raw_sql, (request_id,))
     return redirect('document_list')
-
-def remove_document_request(request, id: int):
-    """
-    Удаление услуги из заявки
-    """
-    if request.method != "POST":
-        return redirect('install_document_request')
-
-    data = request.POST
-    action = data.get("request_action")
-    if action == "delete_request":
-        delete_request(id)
-        return redirect('document_list')
-    return get_document_request(request, id)
 
 
 def get_document_request(request, id: int):
