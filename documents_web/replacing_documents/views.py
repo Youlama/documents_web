@@ -285,6 +285,7 @@ def resolve_install_document_request(request, pk):
         req_doc.new_document_number = generate_document_number(number_length)
         req_doc.save()
     install_document_request.manager = SINGLETON_MANAGER
+    install_document_request.status = InstallDocumentRequest.RequestStatus.COMPLETED
     install_document_request.save()
     serializer = InstallDocumentRequestSerializer(install_document_request)
     return Response(serializer.data)
